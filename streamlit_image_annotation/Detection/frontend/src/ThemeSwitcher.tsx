@@ -9,7 +9,6 @@ type ContainerProps = {
 }
 
 const ThemeSwitcher = ({ children, theme }: ContainerProps) => {
-    console.log(theme)
     if (theme?.base !== 'light') {
         return (
             <DarkMode>

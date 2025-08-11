@@ -32,11 +32,7 @@ const Detection = ({ args, theme }: ComponentProps) => {
     line_width,
     use_space
   }: PythonArgs = args
-
-  const params = new URLSearchParams(window.location.search);
-  const baseUrl = params.get('streamlitUrl')
-  const [image] = useImage(baseUrl + image_url)
-
+  const [image] = useImage(image_url)
   const [rectangles, setRectangles] = React.useState(
     bbox_info.map((bb, i) => {
       return {
@@ -95,7 +91,7 @@ const Detection = ({ args, theme }: ComponentProps) => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [rectangles]); 
+  }, [rectangles]);
 
   return (
     <ChakraProvider>
