@@ -5,7 +5,7 @@ import requests
 import numpy as np
 from enum import IntEnum
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageOps
 import streamlit as st
 
 import matplotlib.pyplot as plt
@@ -20,8 +20,6 @@ try:
 except:
     from streamlit.elements.lib.image_utils import image_to_url
 from streamlit_image_annotation import IS_RELEASE
-
-IS_RELEASE = True
 
 if IS_RELEASE:
     absolute_path = os.path.dirname(os.path.abspath(__file__))
@@ -71,8 +69,14 @@ def get_image_size_from_url(image_url):
         image_content = response.content
         image_stream = BytesIO(image_content)
         img = Image.open(image_stream)
+        print(f"Raw dimensions: Width={img.size[0]}, Height={img.size[1]}")
+        # Apply EXIF transpose to correctly orient the image
+        img_transposed = ImageOps.exif_transpose(img)
+        print(
+            f"Corrected dimensions: Width={img_transposed.size[0]}, Height={img_transposed.size[1]}"
+        )
 
-        return img.size
+        return img_transposed.size
     except requests.exceptions.RequestException as e:
         print(f"Error fetching image from URL: {e}")
         return None

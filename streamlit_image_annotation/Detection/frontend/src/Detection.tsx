@@ -67,6 +67,7 @@ const Detection = ({ args, theme }: ComponentProps) => {
   useEffect(() => {
     const resizeCanvas = () => {
       const scale_ratio = window.innerWidth * 0.8 / image_size[0]
+      console.log("scale_ratio",scale_ratio)
       setScale(Math.min(scale_ratio, 1.0))
       Streamlit.setFrameHeight(image_size[1] * Math.min(scale_ratio, 1.0))
     }
