@@ -173,15 +173,7 @@ def detection(
         # key=key,
     )
     if component_value is not None:
-        component_value = [
-            {
-                "bbox": [b for b in item["bbox"]],
-                "label_id": item["label_id"],
-                "label": item["label"],
-            }
-            for item in component_value
-        ]
-    return component_value
+        return component_value
 
 
 if not IS_RELEASE:
@@ -210,11 +202,4 @@ if not IS_RELEASE:
         use_space=True,
         # key=target_image_path,
     )
-    if new_labels is not None:
-        st.session_state["result_dict"][target_image_path]["bboxes"] = [
-            v["bbox"] for v in new_labels
-        ]
-        st.session_state["result_dict"][target_image_path]["labels"] = [
-            v["label_id"] for v in new_labels
-        ]
-    st.json(st.session_state["result_dict"])
+    st.write(new_labels)
